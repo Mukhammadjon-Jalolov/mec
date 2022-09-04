@@ -2,6 +2,7 @@ import React, {Component} from "react"
 import './app.scss';
 import axios from "axios";
 import OneComp from "./OneComp";
+import FormDialog from "./BasicModal"
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
@@ -19,10 +20,11 @@ constructor(props){
 	this.state = {
 		variables: []
 	}
-	this.addNew = this.addNew.bind(this);
+	this.savetoServer = this.savetoServer.bind(this);
+	this.saveChanges = this.saveChanges.bind(this);
 }
 
-
+// ************************************ HERE WE GET ALL EXISTING VARIABLES FROM THE SERVER
 componentDidMount(){
 	const url = 'http://localhost:4000/allvars';
 
@@ -34,34 +36,38 @@ componentDidMount(){
 		})
 }
 
-addNew(){
+// ************************************ THIS CODE TRIES TO SAVE A NEW VARIABLE TO SERVER ***********
+savetoServer(data){
 	let tempArr = this.state.variables;
-	let newObj = {city: "write city", address: "write address", housenumber: "number", color: "color", rooms: "rooms", image: "imgs"}
-	tempArr.push(newObj)
+	tempArr.push(data);
 	this.setState({variables: tempArr})
-	console.log(this.state.variables)
+	//console.log(data)
+}
+
+// ************************************ THIS CODE SAVES CHANGES TO SERVER ***********
+saveChanges(changes){
+	const url = 'http://localhost:4000/savevar';
+
+	axios.post(url, this.state.variables)
+		.then(response => response.data)
+		.then((data) => {
+			console.log(data)
+			this.setState({variables: data})
+		})
+	console.log("Trying to Save Changes")
 }
 
 render(){
 	
 	const varsList = this.state.variables.map((result) => (
-		<OneComp result = {result} key = {result.housenumber}/>
+		<OneComp result = {result} key = {result.housenumber} saveChanges = {this.saveChanges}/>
 	))
 	
 	return(
-		<div className = "main">
-			
+		<div className = "main">			
 				<p> Here you can see all variables from the database </p>
-				
-
-					
 					{varsList}
-				
-					<button id="addItem" onClick={this.addNew}>
-						Add new item
-					</button>
-				
-			
+					<FormDialog saveChild = {this.savetoServer}/>
 		</div>
 	)
 	

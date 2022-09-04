@@ -22,7 +22,7 @@ constructor(props){
 	}
 	this.editAll = this.editAll.bind(this);
 	this.detectChanges = this.detectChanges.bind(this);
-	this.saveChanges = this.saveChanges.bind(this);
+	this.saveChangesHere = this.saveChangesHere.bind(this);
 }
 
 
@@ -41,25 +41,18 @@ editAll(){
 }
 
 detectChanges(val, e){
-	console.log(e.target.value)
+	//console.log(e.target.value)
 	let tempObj = JSON.parse(JSON.stringify(this.state.variables));
 	tempObj[val] = e.target.value;
 	this.setState({variables: tempObj})
-	console.log(tempObj);
+	//console.log(tempObj);
 }
 
-saveChanges(){
+saveChangesHere(){
 	console.log(this.state.variables)
 	this.setState({isEditing: false})
 
-	const url = 'http://localhost:4000/savevar';
-
-	axios.post(url, this.state.variables)
-		.then(response => response.data)
-		.then((data) => {
-			console.log(data)
-			this.setState({variables: data})
-		})
+	this.props.saveChanges(this.state.variables);
 }
 
 render(){
@@ -82,7 +75,7 @@ render(){
 				id="standard-helperText"
 				defaultValue={this.props.result.address}
 				variant="standard"
-				onChange={this.detectChanges}
+				onChange={(e) => {this.detectChanges("address", e)}}
         		/> : this.props.result.address
 			}
 			<br/>
@@ -92,7 +85,7 @@ render(){
 				id="standard-helperText"
 				defaultValue={this.props.result.housenumber}
 				variant="standard"
-				onChange={this.detectChanges}
+				onChange={(e) => {this.detectChanges("housenumber", e)}}
         		/> : this.props.result.housenumber
 			}
 			<br/>
@@ -101,7 +94,7 @@ render(){
 				id="standard-helperText"
 				defaultValue={this.props.result.color}
 				variant="standard"
-				onChange={this.detectChanges}
+				onChange={(e) => {this.detectChanges("color", e)}}
         		/> : this.props.result.color
 			}
 			<br/>
@@ -110,7 +103,7 @@ render(){
 				id="standard-helperText"
 				defaultValue={this.props.result.rooms}
 				variant="standard"
-				onChange={this.detectChanges}
+				onChange={(e) => {this.detectChanges("rooms", e)}}
         		/> : this.props.result.rooms
 			}
 			
@@ -121,7 +114,7 @@ render(){
 			<div>
 				<button onClick={this.editAll}>{this.state.editorcancel}</button>
 				&nbsp;
-				<button onClick={this.saveChanges}>Save changes</button>
+				<button onClick={this.saveChangesHere}>Save changes</button>
 			</div>
 		</div>
 	)
