@@ -4,10 +4,7 @@ import axios from "axios";
 import OneComp from "./OneComp";
 import FormDialog from "./BasicModal"
 
-import { BrowserRouter as Router, Route } from "react-router-dom";
-
 import TextField from '@mui/material/TextField';
-import SendIcon from '@mui/icons-material/Send';
 
 
 //https://www.w3schools.com/js/js_callback.asp
@@ -26,7 +23,8 @@ constructor(props){
 
 // ************************************ HERE WE GET ALL EXISTING VARIABLES FROM THE SERVER
 componentDidMount(){
-	const url = 'http://localhost:4000/allvars';
+
+	const url = 'http://localhost:4000/getall';
 
 	axios.get(url)
 		.then(response => response.data)
@@ -37,30 +35,51 @@ componentDidMount(){
 }
 
 // ************************************ THIS CODE TRIES TO SAVE A NEW VARIABLE TO SERVER ***********
-savetoServer(data){
-	let tempArr = this.state.variables;
-	tempArr.push(data);
-	this.setState({variables: tempArr})
-	//console.log(data)
-}
+savetoServer(newvariable){
+	//let tempArr = this.state.variables;
+	//tempArr.push(data);
+	//this.setState({variables: tempArr})
+	//console.log(newvariable)
 
-// ************************************ THIS CODE SAVES CHANGES TO SERVER ***********
-saveChanges(changes){
-	const url = 'http://localhost:4000/savevar';
+	
+	const url = 'http://localhost:4000/savenew';
 
-	axios.post(url, this.state.variables)
+	axios.post(url, newvariable)
 		.then(response => response.data)
 		.then((data) => {
 			console.log(data)
 			this.setState({variables: data})
 		})
-	console.log("Trying to Save Changes")
+}
+
+// ************************************ THIS CODE SAVES CHANGES TO SERVER ***********
+saveChanges(changes){
+	const url = 'http://localhost:4000/update';
+
+	axios.post(url, changes)
+		.then(response => response.data)
+		.then((data) => {
+			if(data === "ok"){
+				window.location.reload();
+			}
+		})
+	
+}
+
+deleteVar(variable){
+	const url = 'http://localhost:4000/delete';
+
+	axios.post(url, variable)
+		.then(response => response.data)
+		.then((data) => {
+			window.location.reload();
+		})
 }
 
 render(){
 	
-	const varsList = this.state.variables.map((result) => (
-		<OneComp result = {result} key = {result.housenumber} saveChanges = {this.saveChanges}/>
+	let varsList = this.state.variables.map((result) => (
+		<OneComp result = {result} key = {result.housenumber} saveChanges = {this.saveChanges} deleteVar = {this.deleteVar} />
 	))
 	
 	return(
@@ -75,26 +94,5 @@ render(){
 
 }
 
-/*
-function OneComp(props){
-	return (
-		
-		<div className="single">
-			{props.result.city} <br/>
-			{props.result.address} <br/>
-			{props.result.housenumber} <br/>
-			{props.result.color} <br/>
-			{props.result.rooms} <br/>
-			{props.result.image} <br/>
-			<br/>
-			<div>
-				<button>Edit this</button>
-				&nbsp;
-				<button>Save changes</button>
-			</div>
-		</div>
-			
-	)
-} */
 
 export default Home;

@@ -32,6 +32,7 @@ let resultsArr = [];
 
 con.connect(function(err) {
   if (err) throw err;
+  /*
   con.query("SELECT * FROM allvariables", function(err, result, fields){
 	  if(err) throw err;
 
@@ -41,6 +42,7 @@ con.connect(function(err) {
 	  
 	  console.log(resultsArr);
   })
+  */
   console.log("Connected!");
 });
 
@@ -49,13 +51,68 @@ function base64_encode(file){
 }
 
 
-app.get("/allvars", function(req, res) {
-  res.json(resultsArr);
+app.get("/getall", function(req, res) {
+  //resultsArr = [];
+
+  con.query("SELECT * FROM allvariables", function(err, result, fields){
+    if(err) throw err;
+
+    // *********************** THIS PART SEEMS UNNECCESSARY ***************************
+    /*result.forEach((el) => {
+		  resultsArr.push(el)
+	  })*/
+
+    res.json(result);
+    console.log(result);
+
+  })
+
+  //res.json(result);
+  
 });
 
-app.post("/savevar", function(req, res) {
-	console.log(req.body)
+app.post("/savenew", function(req, res) {
+	console.log(typeof(req.body.city))
+  let newquery = "INSERT INTO allvariables (city, address, housenumber, color, rooms) values ('" + req.body.city + "', '" + req.body.address + "', '" + req.body.housenumber + "', '" + req.body.color + "', '" + req.body.rooms + "')";
+
+  con.query(newquery, function(err, result, fields){
+    if(err) throw err;
+      //res.json("Sucessfully inserted!");
+  })
+
+  con.query("SELECT * FROM allvariables", function(err, result, fields){
+    if(err) throw err;
+      res.json(result);
+      console.log(result);
+  })
+
+
+});
+
+app.post("/update", function(req, res) {
+  let newquery = "UPDATE allvariables SET city = '" + req.body.city + "', address = '" + req.body.address + "', housenumber = '" + req.body.housenumber + "', color = '" + req.body.color + "', rooms = '" + req.body.rooms + "' WHERE city = '" + req.body.city + "'";
+
+  con.query(newquery, function(err, result, fields){
+    if(err) throw err;
+      res.json("ok");
   });
+
+
+});
+
+app.post("/delete", function(req, res) {
+  let deleteQuery = "delete from allvariables where city = '" + req.body.city + "'";
+    con.query(deleteQuery, function(err, result, fields){
+      if(err) throw err;
+        console.log("Sucessfully deleted!" + req.body.city);
+    });
+
+    con.query("SELECT * FROM allvariables", function(err, result, fields){
+      if(err) throw err;
+        res.json(result);
+        console.log(result);
+    });
+});
 
 
 app.listen(4000, function(){

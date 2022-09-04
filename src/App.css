@@ -13,7 +13,9 @@
 .single{
   margin: 20px;
   padding: 10px;
-  border: 1px solid violet;
+  border: 2px solid #61dafb;
+  background-color: #ddd;
+  width: 70%;
 }
 
 #addItem{

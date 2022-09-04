@@ -1,11 +1,7 @@
 import React, {Component} from "react"
 import './app.scss';
-import axios from "axios";
-
-import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import TextField from '@mui/material/TextField';
-import SendIcon from '@mui/icons-material/Send';
 
 
 //https://www.w3schools.com/js/js_callback.asp
@@ -20,24 +16,26 @@ constructor(props){
 		isEditing: false,
 		editorcancel: "Edit this"
 	}
-	this.editAll = this.editAll.bind(this);
+	this.editThis = this.editThis.bind(this);
 	this.detectChanges = this.detectChanges.bind(this);
 	this.saveChangesHere = this.saveChangesHere.bind(this);
+	this.deleteThis = this.deleteThis.bind(this);
+	this.cancelEditing = this.cancelEditing.bind(this);
 }
 
 
 componentDidMount(){
 	this.setState({variables: this.props.result})
-	console.log(this.props.result)
+	//console.log(this.props.result)
 }
 
-editAll(){
+editThis(){
 	this.setState({isEditing: true})
-	if(this.state.editorcancel === "Cancel"){
-		this.setState({isEditing: false})
-		this.setState({editorcancel: "Edit this"})
-	}
-	this.setState({editorcancel: "Cancel"})
+
+}
+
+cancelEditing(){
+	this.setState({isEditing: false})
 }
 
 detectChanges(val, e){
@@ -49,10 +47,12 @@ detectChanges(val, e){
 }
 
 saveChangesHere(){
-	console.log(this.state.variables)
-	this.setState({isEditing: false})
-
+	this.setState({isEditing: false});
 	this.props.saveChanges(this.state.variables);
+}
+
+deleteThis(){
+	this.props.deleteVar(this.state.variables);
 }
 
 render(){
@@ -112,9 +112,15 @@ render(){
 			
 			<br/>
 			<div>
-				<button onClick={this.editAll}>{this.state.editorcancel}</button>
+				{ this.state.isEditing ? 
+				<button onClick={this.cancelEditing}>Cancel</button> : 
+				<button onClick={this.editThis}>Edit this</button>
+				}
+				
 				&nbsp;
 				<button onClick={this.saveChangesHere}>Save changes</button>
+				&nbsp;
+				<button onClick={this.deleteThis}>Delete this</button>
 			</div>
 		</div>
 	)
