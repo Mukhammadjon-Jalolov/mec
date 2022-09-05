@@ -90,7 +90,7 @@ app.post("/savenew", function(req, res) {
 });
 
 app.post("/update", function(req, res) {
-  let newquery = "UPDATE allvariables SET city = '" + req.body.city + "', address = '" + req.body.address + "', housenumber = '" + req.body.housenumber + "', color = '" + req.body.color + "', rooms = '" + req.body.rooms + "' WHERE city = '" + req.body.city + "'";
+  let newquery = "UPDATE allvariables SET city = '" + req.body.city + "', address = '" + req.body.address + "', housenumber = '" + req.body.housenumber + "', color = '" + req.body.color + "', rooms = '" + req.body.rooms + "' WHERE id = '" + req.body.id + "'";
   console.log(newquery)
   con.query(newquery, function(err, result, fields){
     if(err) throw err;
@@ -101,7 +101,7 @@ app.post("/update", function(req, res) {
 });
 
 app.post("/delete", function(req, res) {
-  let deleteQuery = "delete from allvariables where city = '" + req.body.city + "'";
+  let deleteQuery = "delete from allvariables where id = '" + req.body.id + "'";
     con.query(deleteQuery, function(err, result, fields){
       if(err) throw err;
         console.log("Sucessfully deleted!" + req.body.city);

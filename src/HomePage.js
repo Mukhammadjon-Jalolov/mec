@@ -74,7 +74,10 @@ deleteVar(variable){
 		.then(response => response.data)
 		.then((data) => {
 			window.location.reload();
+			window.alert("deleted from database");
 		})
+		
+		
 }
 
 render(){

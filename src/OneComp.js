@@ -43,6 +43,7 @@ editThis(){
 cancelEditing(){
 	this.setState({isEditing: false})
 	this.setState({backgrcolorStyle: {backgroundColor: this.props.result.color} });
+	this.setState({variables: this.props.result})
 }
 
 detectChanges(val, e){

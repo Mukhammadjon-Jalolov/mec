@@ -53,7 +53,7 @@ export default function FormDialog({data, saveChild}) {
         <DialogTitle>Add new variable </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Here you can fill the form and save it to create a new variable. Save it to the database for later use
+            Fill the form about houses. Save it to the database
           </DialogContentText>
 
           <br/>
@@ -89,7 +89,7 @@ export default function FormDialog({data, saveChild}) {
             
             <TextField
                 id="standard-helperText"
-                placeholder="Rooms"
+                placeholder="Number of rooms"
                 variant="standard"
                 autoComplete='off'
                 onChange={(e) => {detectChanges("rooms", e)}}
