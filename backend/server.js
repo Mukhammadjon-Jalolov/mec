@@ -91,7 +91,7 @@ app.post("/savenew", function(req, res) {
 
 app.post("/update", function(req, res) {
   let newquery = "UPDATE allvariables SET city = '" + req.body.city + "', address = '" + req.body.address + "', housenumber = '" + req.body.housenumber + "', color = '" + req.body.color + "', rooms = '" + req.body.rooms + "' WHERE city = '" + req.body.city + "'";
-
+  console.log(newquery)
   con.query(newquery, function(err, result, fields){
     if(err) throw err;
       res.json("ok");

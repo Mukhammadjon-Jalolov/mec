@@ -7,6 +7,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+import { CirclePicker } from 'react-color';
+
 
 export default function FormDialog({data, saveChild}) {
   const [open, setOpen] = React.useState(false);

@@ -56,6 +56,7 @@ savetoServer(newvariable){
 saveChanges(changes){
 	const url = 'http://localhost:4000/update';
 
+	console.log(changes)
 	axios.post(url, changes)
 		.then(response => response.data)
 		.then((data) => {

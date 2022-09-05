@@ -1,7 +1,9 @@
 import React, {Component} from "react"
-import './app.scss';
+//import './app.scss';
+import './App.css';
 
 import TextField from '@mui/material/TextField';
+import { CirclePicker } from 'react-color';
 
 
 //https://www.w3schools.com/js/js_callback.asp
@@ -14,8 +16,12 @@ constructor(props){
 	this.state = {
 		variables: {},
 		isEditing: false,
-		editorcancel: "Edit this"
+		editorcancel: "Edit this",
+		backgrcolorStyle: {},
+		textColorStyle: {},
+		temporaryColor: {}
 	}
+
 	this.editThis = this.editThis.bind(this);
 	this.detectChanges = this.detectChanges.bind(this);
 	this.saveChangesHere = this.saveChangesHere.bind(this);
@@ -23,32 +29,40 @@ constructor(props){
 	this.cancelEditing = this.cancelEditing.bind(this);
 }
 
-
 componentDidMount(){
-	this.setState({variables: this.props.result})
-	//console.log(this.props.result)
+	this.setState({variables: this.props.result});
+	this.setState({backgrcolorStyle: {backgroundColor: this.props.result.color} });
+	this.setState({textColorStyle: {color: this.props.result.color} })
 }
 
 editThis(){
 	this.setState({isEditing: true})
-
 }
 
 cancelEditing(){
 	this.setState({isEditing: false})
+	this.setState({backgrcolorStyle: {backgroundColor: this.props.result.color} });
 }
 
 detectChanges(val, e){
-	//console.log(e.target.value)
 	let tempObj = JSON.parse(JSON.stringify(this.state.variables));
-	tempObj[val] = e.target.value;
+	
+	if(val === "color"){
+		tempObj.color = e.hex
+		this.setState({backgrcolorStyle: {backgroundColor: e.hex} });
+	} else {
+		tempObj[val] = e.target.value
+	}
+
+	//tempObj[val] = e.target.value;
+	
 	this.setState({variables: tempObj})
-	//console.log(tempObj);
 }
 
 saveChangesHere(){
 	this.setState({isEditing: false});
 	this.props.saveChanges(this.state.variables);
+	console.log(this.state.variables);
 }
 
 deleteThis(){
@@ -58,7 +72,7 @@ deleteThis(){
 render(){
 	
 	return(
-		<div className="single">
+		<div className="single" style = {this.state.backgrcolorStyle} >
 
 			{ this.state.isEditing ? 
 				<TextField
@@ -89,15 +103,12 @@ render(){
         		/> : this.props.result.housenumber
 			}
 			<br/>
+			
 			{ this.state.isEditing ? 
-				<TextField
-				id="standard-helperText"
-				defaultValue={this.props.result.color}
-				variant="standard"
-				onChange={(e) => {this.detectChanges("color", e)}}
-        		/> : this.props.result.color
+				<div className="paletteContainer"> <CirclePicker onChangeComplete={(e) => {this.detectChanges("color", e)}}/> </div> :
+				<div className="pickColor" style = {this.state.textColorStyle}> Current color </div>
 			}
-			<br/>
+			
 			{ this.state.isEditing ? 
 				<TextField
 				id="standard-helperText"
@@ -106,8 +117,10 @@ render(){
 				onChange={(e) => {this.detectChanges("rooms", e)}}
         		/> : this.props.result.rooms
 			}
-			
 			<br/>
+
+			
+
 			{this.props.result.image} <br/>
 			
 			<br/>

@@ -18,6 +18,22 @@
   width: 70%;
 }
 
+.pickColor{
+  width: 100px;
+  height: 50px;
+  border: 1px solid #282c34;
+  background-color: white;
+  border-radius: 5px;
+  padding: 3px;
+}
+
+.paletteContainer{
+  margin: 8px;
+  padding: 5px;
+  border: 1px solid white;
+  width: fit-content
+}
+
 #addItem{
   right: 0;
 }
