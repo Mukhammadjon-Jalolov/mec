@@ -5,7 +5,8 @@ import OneComp from "./OneComp";
 import FormDialog from "./BasicModal"
 
 import TextField from '@mui/material/TextField';
-
+import Button from '@mui/material/Button';
+import { saveAs } from 'file-saver';
 
 //https://www.w3schools.com/js/js_callback.asp
 
@@ -19,6 +20,7 @@ constructor(props){
 	}
 	this.savetoServer = this.savetoServer.bind(this);
 	this.saveChanges = this.saveChanges.bind(this);
+	this.downloadtoC = this.downloadtoC.bind(this);
 }
 
 // ************************************ HERE WE GET ALL EXISTING VARIABLES FROM THE SERVER
@@ -64,7 +66,6 @@ saveChanges(changes){
 				window.location.reload();
 			}
 		})
-	
 }
 
 deleteVar(variable){
@@ -76,14 +77,22 @@ deleteVar(variable){
 			window.location.reload();
 			window.alert("deleted from database");
 		})
-		
-		
+}
+
+downloadtoC(){
+	const url = 'http://localhost:4000/getcformat';
+
+	axios.get(url)
+		.then(response => response.data)
+		.then((data) => {
+			console.log(data)
+		})
 }
 
 render(){
 	
 	let varsList = this.state.variables.map((result) => (
-		<OneComp result = {result} key = {result.housenumber} saveChanges = {this.saveChanges} deleteVar = {this.deleteVar} />
+		<OneComp result = {result} key = {result.id} saveChanges = {this.saveChanges} deleteVar = {this.deleteVar} />
 	))
 	
 	return(
@@ -91,6 +100,8 @@ render(){
 				<h2 className="headertxt"> Here you can see all variables from the database and their properties </h2>
 					{varsList}
 					<FormDialog saveChild = {this.savetoServer}/>
+					&nbsp;
+					<Button variant="contained" color = "info" onClick={this.downloadtoC}>Download as C file</Button>
 		</div>
 	)
 	

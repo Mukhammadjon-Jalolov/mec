@@ -12,6 +12,9 @@ const app = express();
 
 const PORT = process.env.PORT;
 
+const ts2c = require("ts2c");
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -113,6 +116,16 @@ app.post("/delete", function(req, res) {
         console.log(result);
     });
 });
+
+app.get("/getcformat", function(req, res) {
+  con.query("SELECT * FROM allvariables", function(err, result, fields){
+    if(err) throw err;
+      var tempResult = result[0];
+      var cCode = ts2c.transpile(tempResult.toString());
+      res.send(result[0]);
+      //console.log(cCode);
+  })
+})
 
 
 app.listen(4000, function(){

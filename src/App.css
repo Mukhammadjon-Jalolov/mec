@@ -7,6 +7,7 @@
 
 .secondary {
   padding: 20px;
+  width: auto;
 }
 
 .headertxt{
@@ -27,6 +28,7 @@
 
 .addnew{
   padding-left: 20px;
+  display: inline;
 }
 
 .pickColor{
