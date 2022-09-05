@@ -84,8 +84,8 @@ render(){
 	))
 	
 	return(
-		<div className = "main">			
-				<p> Here you can see all variables from the database </p>
+		<div className="secondary">
+				<h2 className="headertxt"> Here you can see all variables from the database and their properties </h2>
 					{varsList}
 					<FormDialog saveChild = {this.savetoServer}/>
 		</div>

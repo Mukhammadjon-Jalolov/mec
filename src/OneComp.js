@@ -3,6 +3,7 @@ import React, {Component} from "react"
 import './App.css';
 
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import { CirclePicker } from 'react-color';
 
 
@@ -53,8 +54,6 @@ detectChanges(val, e){
 	} else {
 		tempObj[val] = e.target.value
 	}
-
-	//tempObj[val] = e.target.value;
 	
 	this.setState({variables: tempObj})
 }
@@ -74,66 +73,102 @@ render(){
 	return(
 		<div className="single" style = {this.state.backgrcolorStyle} >
 
-			{ this.state.isEditing ? 
-				<TextField
-				id="standard-helperText"
-				defaultValue={this.state.variables.city}
-				variant="standard"
-				onChange={(e) => {this.detectChanges("city", e)}}
-        		/> : this.state.variables.city
-			}
-			<br/>
+			<div className="onerow">
+				<div className="leftlabel">
+					City:
+				</div>
+				<div className="rightside">
+					{ this.state.isEditing ? 
+					<TextField
+					id="standard-helperText"
+					defaultValue={this.state.variables.city}
+					variant="standard"
+					onChange={(e) => {this.detectChanges("city", e)}}
+					/> : this.state.variables.city
+					}
+				</div>
+			</div>
+			
 
-			{ this.state.isEditing ? 
-				<TextField
-				id="standard-helperText"
-				defaultValue={this.props.result.address}
-				variant="standard"
-				onChange={(e) => {this.detectChanges("address", e)}}
-        		/> : this.props.result.address
-			}
-			<br/>
-			 
-			{ this.state.isEditing ? 
-				<TextField
-				id="standard-helperText"
-				defaultValue={this.props.result.housenumber}
-				variant="standard"
-				onChange={(e) => {this.detectChanges("housenumber", e)}}
-        		/> : this.props.result.housenumber
-			}
-			<br/>
+
+
+
+			<div className="onerow">
+				<div className="leftlabel">
+					Address:
+				</div>
+				<div className="rightside">
+					{ this.state.isEditing ? 
+					<TextField
+					id="standard-helperText"
+					defaultValue={this.props.result.address}
+					variant="standard"
+					onChange={(e) => {this.detectChanges("address", e)}}
+					/> : this.props.result.address
+					}
+				</div>
+			</div>
+			
+			
+
+			<div className="onerow">
+				<div className="leftlabel">
+					House number:
+				</div>
+				<div className="rightside">
+					{ this.state.isEditing ? 
+					<TextField
+					id="standard-helperText"
+					defaultValue={this.props.result.housenumber}
+					variant="standard"
+					onChange={(e) => {this.detectChanges("housenumber", e)}}
+					/> : this.props.result.housenumber
+					}
+				</div>
+			</div>
+			
 			
 			{ this.state.isEditing ? 
 				<div className="paletteContainer"> <CirclePicker onChangeComplete={(e) => {this.detectChanges("color", e)}}/> </div> :
 				<div className="pickColor" style = {this.state.textColorStyle}> Current color </div>
 			}
 			
-			{ this.state.isEditing ? 
-				<TextField
-				id="standard-helperText"
-				defaultValue={this.props.result.rooms}
-				variant="standard"
-				onChange={(e) => {this.detectChanges("rooms", e)}}
-        		/> : this.props.result.rooms
-			}
-			<br/>
 
+			<div className="onerow">
+				<div className="leftlabel">
+					Rooms:
+				</div>
+				<div className="rightside">
+					{ this.state.isEditing ? 
+					<TextField
+					id="standard-helperText"
+					defaultValue={this.props.result.rooms}
+					variant="standard"
+					onChange={(e) => {this.detectChanges("rooms", e)}}
+					/> : this.props.result.rooms
+					}
+				</div>
+			</div>
 			
-
-			{this.props.result.image} <br/>
+			{this.props.result.image} 
 			
 			<br/>
+			
 			<div>
 				{ this.state.isEditing ? 
-				<button onClick={this.cancelEditing}>Cancel</button> : 
-				<button onClick={this.editThis}>Edit this</button>
+				<Button variant="contained" color = "info" onClick={this.cancelEditing}>Cancel</Button> : 
+				<Button variant="contained" color = "info" onClick={this.editThis}>Edit this</Button>
 				}
 				
 				&nbsp;
-				<button onClick={this.saveChangesHere}>Save changes</button>
+
+				{ this.state.isEditing ?
+				<Button variant="contained" color = "success" onClick={this.saveChangesHere}>Save changes</Button> :
+				""
+				}
+				
 				&nbsp;
-				<button onClick={this.deleteThis}>Delete this</button>
+				<Button variant="outlined" color = "warning" onClick={this.deleteThis}>Delete this</Button>
 			</div>
 		</div>
 	)

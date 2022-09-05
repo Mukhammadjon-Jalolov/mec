@@ -1,13 +1,20 @@
 .main{
-  margin: 20px;
-  padding: 10px;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url(./apartments.jpg)
 }
 
-.App {
+.secondary {
+  padding: 20px;
+}
+
+.headertxt{
+  color: white;
+  font-size: larger;
+  font-weight: 500;
+  padding-left: 20px;
   text-align: center;
-  display: grid;
-  grid-template-columns: 33% 33% 33%;
-  height: 400px;
 }
 
 .single{
@@ -16,6 +23,10 @@
   border: 2px solid #61dafb;
   background-color: #ddd;
   width: 70%;
+}
+
+.addnew{
+  padding-left: 20px;
 }
 
 .pickColor{
@@ -33,6 +44,24 @@
   border: 1px solid white;
   width: fit-content
 }
+
+.onerow{
+  display: grid;
+  grid-template-columns: 25% 75%;
+  width: auto;
+  margin: 5px 0;
+}
+
+.leftlabel{
+  left: 10px;
+  font-size: medium;
+}
+
+.rightside{
+  left: 200px;
+}
+
+
 
 #addItem{
   right: 0;

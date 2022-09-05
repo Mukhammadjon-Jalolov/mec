@@ -12,7 +12,8 @@ import { CirclePicker } from 'react-color';
 
 export default function FormDialog({data, saveChild}) {
   const [open, setOpen] = React.useState(false);
-  const [filled, fillForm] = React.useState({city: " ", address: " ", housenumber: " ", color: " ", rooms: " ", image: " "});
+  const [filled, fillForm] = React.useState({city: "not specified", address: "not specified", housenumber: "not specified", color: " ", rooms: "not specified", image: " "});
+  const [textColorStyle, changeTextColor] = React.useState({backgroundColor: "#fff"});
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -24,7 +25,17 @@ export default function FormDialog({data, saveChild}) {
 
   const detectChanges = (data, e) => {
     let newObj = filled;
-    newObj[data] = e.target.value;
+
+    if(data === "color"){
+      newObj.color = e.hex;
+
+      changeTextColor({backgroundColor: e.hex})
+      //this.setState({backgrcolorStyle: {backgroundColor: e.hex} });
+    } else {
+      newObj[data] = e.target.value
+    }
+
+    //newObj[data] = e.target.value;
     fillForm(newObj)
   };
 
@@ -34,9 +45,9 @@ export default function FormDialog({data, saveChild}) {
   }
 
   return (
-    <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Add new
+    <div className='addnew'>
+      <Button variant="contained" onClick={handleClickOpen}>
+        Add new variable
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add new variable </DialogTitle>
@@ -70,13 +81,12 @@ export default function FormDialog({data, saveChild}) {
                 onChange={(e) => {detectChanges("housenumber", e)}}
         		/>
             <br/>
-            <TextField
-                id="standard-helperText"
-                placeholder="Color"
-                variant="standard"
-                onChange={(e) => {detectChanges("color", e)}}
-        		/>
             <br/>
+            <div className="pickColor" style = {textColorStyle}> Selected color </div>
+            <div className="paletteContainer">
+              <CirclePicker onChangeComplete = { (e) => {detectChanges("color", e)} } />
+            </div>
+            
             <TextField
                 id="standard-helperText"
                 placeholder="Rooms"
