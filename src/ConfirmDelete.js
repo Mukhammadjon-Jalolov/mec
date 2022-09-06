@@ -25,7 +25,7 @@ export default function ConfirmDelete({data, deleteThis}) {
 
   return (
     <div className='addnew'>
-      <Button variant="outlined" color = "warning" onClick={handleClickOpen}>
+      <Button variant="contained" color = "warning" onClick={handleClickOpen}>
         Delete this
       </Button>
       <Dialog
