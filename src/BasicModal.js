@@ -12,7 +12,7 @@ import { CirclePicker } from 'react-color';
 
 export default function FormDialog({data, saveChild}) {
   const [open, setOpen] = React.useState(false);
-  const [filled, fillForm] = React.useState({city: "not specified", address: "not specified", housenumber: "not specified", color: " ", rooms: "not specified", image: " "});
+  const [filled, fillForm] = React.useState({city: "not specified", address: "not specified", housenumber: "not specified", color: " ", rooms: "not specified"});
   const [textColorStyle, changeTextColor] = React.useState({backgroundColor: "#fff"});
 
   const handleClickOpen = () => {

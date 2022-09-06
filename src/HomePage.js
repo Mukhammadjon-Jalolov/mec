@@ -80,13 +80,35 @@ deleteVar(variable){
 }
 
 downloadtoC(){
-	const url = 'http://localhost:4000/getcformat';
+	
+	let cformat3 = "{ printf(" + JSON.stringify(this.state.variables) + ") \r\n return 0; \r\n}"
+	let cformat = "#include <stdio.h> \r\n int main() \r\n " + cformat3;
+	
+	let str = "";
 
-	axios.get(url)
-		.then(response => response.data)
-		.then((data) => {
-			console.log(data)
-		})
+	this.state.variables.map((el) => {
+		for(let x in el){
+			if(typeof(el[x]) === "number"){
+				str += "int " + x + " = " + el[x] + "\r\n";
+			} else if(typeof(el[x]) === "string"){
+				str += "char " + x + "[] = " + el[x] + "\r\n";
+			} else if(typeof(el[x]) === "object"){
+				str += "char " + x + "[] = " + el[x] + "\r\n";
+			}
+		}
+	})
+
+	let explain = "\r\nBelow is the C code for creating an array of objects for this site (I guess this is correct as expected in the task) \r\n \r\n \r\n";
+	let cClass = "#include<iostream>\r\n using namespace std; \r\n \r\n class Apartments \r\n {\r\n  char city[]; \r\n  char address[]; \r\n  int housenumber; \r\n  char color[]; \r\n  int rooms; \r\n  int id; \r\n }; \r\n \r\n";
+	let cObject = "int main(){\r\n Apartments aprt["+ this.state.variables.length +"]; \r\n int n = "+ this.state.variables.length +", i; \r\n for(i = 0; i < n; i++) {\r\n	aprt[i].getdata(); \r\n }\r\n return 0; \r\n};\r\n";
+	let description = "\r\n \r\nBelow is the example of data types in C for this task \r\n\r\n";
+	let cArray = explain + cClass + cObject + description + str;
+
+	
+	//let stringFormat = JSON.stringify(this.state.variables);
+	//let blob = new Blob([cArray], { type: "text/plain; charset=utf-8" })
+	//saveAs(blob, "C code.txt");
+	console.log(cArray);
 }
 
 render(){
