@@ -10,6 +10,7 @@ import { saveAs } from 'file-saver';
 
 //https://www.w3schools.com/js/js_callback.asp
 
+const siteaddress = 'http://variables.uz/flats/';
 
 class Home extends Component {
 	
@@ -26,7 +27,8 @@ constructor(props){
 // ************************************ HERE WE GET ALL EXISTING VARIABLES FROM THE SERVER
 componentDidMount(){
 
-	const url = 'http://localhost:4000/getall';
+	const url = siteaddress;
+	//const url = 'http://localhost:4000/flats/';
 
 	axios.get(url)
 		.then(response => response.data)
@@ -38,13 +40,9 @@ componentDidMount(){
 
 // ************************************ THIS CODE TRIES TO SAVE A NEW VARIABLE TO SERVER ***********
 savetoServer(newvariable){
-	//let tempArr = this.state.variables;
-	//tempArr.push(data);
-	//this.setState({variables: tempArr})
-	//console.log(newvariable)
 
-	
-	const url = 'http://localhost:4000/savenew';
+	const url = siteaddress + 'savenew';
+	//const url = 'http://localhost:4000/flats/savenew';
 
 	axios.post(url, newvariable)
 		.then(response => response.data)
@@ -56,7 +54,9 @@ savetoServer(newvariable){
 
 // ************************************ THIS CODE SAVES CHANGES TO SERVER ***********
 saveChanges(changes){
-	const url = 'http://localhost:4000/update';
+
+	const url = siteaddress + 'update';
+	//const url = 'http://localhost:4000/flats/update';
 
 	console.log(changes)
 	axios.post(url, changes)
@@ -70,7 +70,9 @@ saveChanges(changes){
 }
 
 deleteVar(variable){
-	const url = 'http://localhost:4000/delete';
+
+	const url = siteaddress + 'delete';
+	//const url = 'http://localhost:4000/flats/delete';
 
 	axios.post(url, variable)
 		.then(response => response.data)
@@ -107,8 +109,8 @@ downloadtoC(){
 
 	
 	//let stringFormat = JSON.stringify(this.state.variables);
-	//let blob = new Blob([cArray], { type: "text/plain; charset=utf-8" })
-	//saveAs(blob, "C code.txt");
+	let blob = new Blob([cArray], { type: "text/plain; charset=utf-8" })
+	saveAs(blob, "C code.txt");
 	console.log(cArray);
 }
 

@@ -63,7 +63,7 @@ detectChanges(val, e){
 saveChangesHere(){
 	this.setState({isEditing: false});
 	this.props.saveChanges(this.state.variables);
-	console.log(this.state.variables);
+	//console.log(this.state.variables);
 }
 
 deleteThis(){
