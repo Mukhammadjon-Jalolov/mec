@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { CirclePicker } from 'react-color';
 
+import ConfirmDelete from './ConfirmDelete';
 
 //https://www.w3schools.com/js/js_callback.asp
 
@@ -67,6 +68,7 @@ saveChangesHere(){
 
 deleteThis(){
 	this.props.deleteVar(this.state.variables);
+
 }
 
 render(){
@@ -114,7 +116,7 @@ render(){
 
 			<div className="onerow">
 				<div className="leftlabel">
-					House number:
+					Flat number:
 				</div>
 				<div className="rightside">
 					{ this.state.isEditing ? 
@@ -169,7 +171,7 @@ render(){
 				}
 				
 				&nbsp;
-				<Button variant="outlined" color = "warning" onClick={this.deleteThis}>Delete this</Button>
+				<ConfirmDelete deleteThis = {this.deleteThis} />
 			</div>
 		</div>
 	)

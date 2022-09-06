@@ -64,6 +64,7 @@ saveChanges(changes){
 		.then((data) => {
 			if(data === "ok"){
 				window.location.reload();
+				window.alert("Variable updated");
 			}
 		})
 }
@@ -119,11 +120,11 @@ render(){
 	
 	return(
 		<div className="secondary">
-				<h2 className="headertxt"> Here you can see all variables from the database and their properties </h2>
+				<h2 className="headertxt"> Here you can see all variables (apartments information) from the database and their properties </h2>
 					{varsList}
 					<FormDialog saveChild = {this.savetoServer}/>
 					&nbsp;
-					<Button variant="contained" color = "info" onClick={this.downloadtoC}>Download as C file</Button>
+					<Button variant="contained" color = "info" onClick={this.downloadtoC}>Download as C code</Button>
 		</div>
 	)
 	
